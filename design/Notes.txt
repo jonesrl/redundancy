@@ -1,0 +1,36 @@
+Goals for first iteration
+-------------------------
+-add files or directories to scan
+-validate that permissions are suitable for scan targets
+-assign priorities to scan targets
+-recursively walk the scan targets
+-hash files to find duplicates
+-export a list of duplicates, with each set of duplicates on one line, ordered
+ by priority
+-full suite of unit and integration tests
+-very basic GUI just to make sure model api is suitable
+-basic command-line options
+
+Figure out how to handle localization soon. look into unicode libs
+
+Move to cmake after development has tapered off
+
+if I go multi-threaded, look into monitor objects, which
+enscapsulate synchronization primitives so client classes don't have to bother
+with it
+
+should I monitor scan targets for changes? see dir_monitor.zip for a boost
+asio example that will monitor directories, then fire a handler when something
+is changed, or possibly the linux file monitoring api.
+
+ScanTarget (maybe break down into Include and Exclude Targets?)
+    will own an IFile or IDirectory
+    will have a priority
+    will have a regular expression
+    bool for recursive scanning
+
+ScanTargetCollection
+    will own ScanTargets
+    will make sure priorities make sense
+    will act as a model layer
+    eliminate redundant targets in scan list

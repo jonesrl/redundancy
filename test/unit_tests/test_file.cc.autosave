@@ -1,0 +1,11 @@
+#include "catch.hpp"
+#include "fakefile.h"
+TEST_CASE("file/file permissions", "a regular readable file in a readable executable directory is a valid target")
+{
+    FakeFile fakeFile("regular_file");
+    fakeFile.isReadable_=true;
+    fakeFile.isRegularFile_=true;
+    fakeFile.isDirectory_=false;
+    fakeFile.exists_=true;
+    REQUIRE(fakeFile.hasValidPermissions() == true);
+}

@@ -1,0 +1,61 @@
+---------------
+Features
+---------------
+scan targets
+    recursively or non-recursively scan directories
+    include or exclude directories or files
+    match or exclude files or directories based on regular expressions
+    use a crypto hash for file comparison
+    prioritize on file location or modification time or maybe other things
+interface
+    qt, gtk, ncurses, or none (command-line options only)
+    non-interactive mode, suitable for scripting or cron jobs
+    show file previews inside if possible, or by launching external viewer
+    configurable color scheme, or use desktop theme when available
+    a DSL for describing sets of scanning options, for easy repeatable scans
+    changing files on one tab will change it on all tabs
+    desktop notifications
+    localization
+    drag-and-drop files and folders into scan targets list
+    logging and syslog interfacing
+    dbus integration
+flexible handling of duplicates
+    dry runs / non-destructive scans
+    offer to symlink/hardlink/move instead of delete
+    offer to export a script
+    offer to export CSV
+maybe go for a plugin architecture
+
+---------------------
+Special file handling
+---------------------
+audio files
+    offer to compare while ignoring tag data
+    do a similarity match instead of exact match
+    consider audio encoding quality to prioritize
+    show tag info so the user can keep the one with 'better' tags
+image files
+    offer to compare while ignoring scale, rotation, color
+    show image preview
+video
+    offer a fuzzy compare to detect if a video is the same, except for logo
+    detect if a file is a clip of another file
+ISO files (maybe other disk image formats?)
+    compare files inside the image with files outside of the image
+file archives (tar, gzip, bzip2, unrar, possibly others..)
+    offer to compare files inside the archive with files outside
+cruft files -- offer to delete miscellaneous junk files
+    stale vim and emacs backup files and swap files (check if needed somehow)
+    object files
+    core dumps
+    stale lock/pid files
+    dangling links
+    browser cache files
+    any thing else I can think of, look for a decruft script and steal ideas
+pacman packages
+    offer to keep 1 or 2 versions behind the currently installed version
+    handle pacsave files
+source code repositories
+    not sure if this is possible, but offer to delete locally stored
+    repositories if current with the remote end. maybe try a git pull
+    or equivalent and if nothing happens, then assume it's up-to-date?
