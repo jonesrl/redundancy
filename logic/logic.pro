@@ -14,8 +14,7 @@ CONFIG += staticlib
 
 SOURCES +=
 
-HEADERS += \
-    ifilesystemobject.h
+HEADERS +=
 unix:!symbian {
     maemo5 {
         target.path = /opt/usr/lib
@@ -32,5 +31,7 @@ else:unix: LIBS += -L$$PWD/../../../../usr/lib/ -lboost_filesystem
 
 INCLUDEPATH += $$PWD/../../../../usr/include/boost
 DEPENDPATH += $$PWD/../../../../usr/include/boost
+
+unix|win32: LIBS += -lboost_system
 
 unix|win32: LIBS += -lboost_system
