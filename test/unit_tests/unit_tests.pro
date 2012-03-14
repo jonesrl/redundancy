@@ -1,5 +1,6 @@
 TEMPLATE = app
 TARGET=unit_tests
+include(../../redundancy.pri)
 CONFIG += console
 CONFIG -= qt
 

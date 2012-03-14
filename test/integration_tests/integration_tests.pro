@@ -6,6 +6,7 @@
 
 TEMPLATE = app
 TARGET=integration_tests
+include(../../redundancy.pri)
 CONFIG += console
 CONFIG -= qt
 INCLUDEPATH += ../../Catch/include
