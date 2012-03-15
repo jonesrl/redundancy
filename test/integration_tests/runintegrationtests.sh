@@ -6,8 +6,13 @@ PROJECT_DIRECTORY=$HOME/redundancy
 # the directory containing the integration tests
 SCRIPT_DIRECTORY=$PROJECT_DIRECTORY/test/integration_tests
 
-# the build directory containing the integration_tests executable
-BUILD_DIRECTORY=$HOME/redundancy-build-desktop-Qt_4_7_4_in_PATH__System__Release/test/integration_tests
+# the build directory -- the following assumes that the script is running from qtcreator
+# the advantage of using pwd is that when the debug and release builds are created in separate
+# direcories, this will still work
+BUILD_DIRECTORY=`pwd`
+
+# the directory containing the integration_tests executable
+EXE_DIRECTORY=$BUILD_DIRECTORY/test/integration_tests
 
 # the test directory where fake files and directories are created
 # this variable is used by setup.sh and cleanup.sh
@@ -30,7 +35,7 @@ fi
 
 
 # if setup ran successfully, run the integration tests
-$BUILD_DIRECTORY/integration_tests
+$EXE_DIRECTORY/integration_tests
 
 # should I continue anyway if the tests failed? seems better to get a clean start everytime
 if [ $? -ne 0 ]
