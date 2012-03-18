@@ -22,11 +22,22 @@ with it
 should I monitor scan targets for changes? see dir_monitor.zip for a boost
 asio example that will monitor directories, then fire a handler when something
 is changed, or possibly the linux file monitoring api.
+IFile
+    will have permissions
+    will have a name
+    will have a canonical/normalized name
+IDirectory
+    will have permissions
+    will have a name
+    will have a canonical/normalized name
+    will have a collection of IFiles and/or IDirectories
+ILink
+    will act as a Proxy to an IFile or IDirectory
 
 ScanTarget (maybe break down into Include and Exclude Targets?)
     will own an IFile or IDirectory
     will have a priority
-    will have a regular expression
+    will have a regular expression (default to * if not set)
     bool for recursive scanning
 
 ScanTargetCollection

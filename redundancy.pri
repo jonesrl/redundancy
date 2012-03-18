@@ -20,3 +20,7 @@ QMAKE_CXXFLAGS_DEBUG += -ggdb3 -O -Wall -Weffc++ -pedantic  \
     -Wunused-function  -Wunused-label  -Wunused-parameter \
     -Wunused-value  -Wunused-variable  -Wvariadic-macros \
     -Wvolatile-register-var  -Wwrite-strings
+
+HEADERS +=
+
+SOURCES +=
