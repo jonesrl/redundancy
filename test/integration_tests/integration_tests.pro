@@ -9,9 +9,10 @@ TARGET=integration_tests
 include(../../redundancy.pri)
 CONFIG += console
 CONFIG -= qt
-INCLUDEPATH += ../../Catch/include
+
 SOURCES += \
-    integrationtestsrunner.cc
+    integrationtestsrunner.cc \
+    testfile.cc
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../logic/release/ -llogic
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../logic/debug/ -llogic
@@ -29,3 +30,5 @@ OTHER_FILES += \
     setup.sh \
     cleanup.sh \
     runintegrationtests.sh
+
+unix|win32: LIBS += -lboost_unit_test_framework

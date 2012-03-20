@@ -2,31 +2,32 @@
 #ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic warning "-w"
-#include "catch.hpp"
+#include <boost/test/unit_test.hpp>
 #pragma GCC diagnostic pop
 #endif
 
 #include "filescantarget.h"
 #include <string>
 using namespace std;
+BOOST_AUTO_TEST_SUITE(filescantarget)
 //XXX TODO: replace FileScanTarget with FakeFileTargets, move these to integration tests
-TEST_CASE("FileScanTarget/nonexistant target", "Correctly determine if a file does not exists")
+BOOST_AUTO_TEST_CASE(ShouldCorrectlyDetermineIfAFileDoesNotExist)
 {
      string nonExistantFilePathName = "/path/to/nonexistantfile.txt";
      FileScanTarget f(nonExistantFilePathName);
-     REQUIRE(false == f.exists());
+     BOOST_REQUIRE(false == f.exists());
 }
 
 
-TEST_CASE("FileScanTarget/existant target", "Correctly determine if a file exist")
+BOOST_AUTO_TEST_CASE(ShouldCorrectlyDetermineIfAFileDoesExist)
 {
     string anExistantFilePathName = "/home/rlj/perms.cc";
     FileScanTarget f(anExistantFilePathName);
-    REQUIRE(true == f.exists());
+    BOOST_REQUIRE(true == f.exists());
 }
 
-TEST_CASE("FileScanTarget/target should be readable", "A valid file scan target should be readable")
+BOOST_AUTO_TEST_CASE(ShouldBeReadable)
 {
-    REQUIRE(true == true);
+    BOOST_REQUIRE(true == true);
 }
-
+BOOST_AUTO_TEST_SUITE_END()

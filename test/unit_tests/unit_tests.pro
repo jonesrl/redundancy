@@ -4,7 +4,7 @@ include(../../redundancy.pri)
 CONFIG += console
 CONFIG -= qt
 
-INCLUDEPATH += ../../Catch/include
+
 SOURCES += \
     testfile.cc \
     unittestsrunner.cc \
@@ -39,4 +39,6 @@ win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../../../../usr
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../../../../usr/lib/debug/boost_system.lib
 else:unix:!symbian: PRE_TARGETDEPS += $$PWD/../../../../../usr/lib/libboost_system.a
 
-HEADERS +=
+
+
+unix|win32: LIBS += -lboost_unit_test_framework
