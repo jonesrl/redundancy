@@ -1,10 +1,16 @@
 #include "ifilesystemobject.h"
 #include <boost/filesystem.hpp>
 #include <string>
+#include <stdexcept>
 
-//TODO: ensure name is not empty or null (throw an exception)
-IFileSystemObject::IFileSystemObject(const std::string& name) : mName(name), mNormalizedName("")
+// references can't be null, so there is no need to check
+// throws if the filename is empty, or if the file or directory does not exist
+IFileSystemObject::IFileSystemObject(const std::string& name)
+    : mName(name), mNormalizedName(""), mPath(name)
 {
+    if(name == "")
+        throw std::runtime_error("FileSystemObject: name should not be empty");
+
 }
 
 // for base classes, this has to be defined even though it's pure virtual
@@ -14,6 +20,10 @@ IFileSystemObject::~IFileSystemObject()
 
 }
 
+bool IFileSystemObject::exists() const
+{
+    return boost::filesystem::exists(mPath);
+}
 // the canonical() function in boost::filesystem will dereference symlinks
 // to get the actual target, as well as remove extraneous dots and slashes
 // I don't see a function in boost::filesystem that will just remove the extra
@@ -27,6 +37,8 @@ IFileSystemObject::~IFileSystemObject()
 // TODO: convert error_code into an exception that displays a nice message
 // TODO: figure out how to handle unicode. The boost::filesystem::path class provides conversions
 // using the ICU library, so I think this would be the appropriate place to do it
+// NOTE: for canonical(p), p must exist, and must be readable
+
 void IFileSystemObject::normalizeName()
 {
     boost::filesystem::path p(mName);

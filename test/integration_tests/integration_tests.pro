@@ -31,4 +31,9 @@ OTHER_FILES += \
     cleanup.sh \
     runintegrationtests.sh
 
+INCLUDEPATH += $$PWD/../../../../../usr/include
+DEPENDPATH += $$PWD/../../../../../usr/include
+
+unix|win32: LIBS += -lboost_system
 unix|win32: LIBS += -lboost_unit_test_framework
+unix|win32: LIBS += -lboost_filesystem

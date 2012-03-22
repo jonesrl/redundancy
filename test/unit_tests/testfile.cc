@@ -4,6 +4,8 @@
 #include <boost/test/unit_test.hpp>
 #pragma GCC diagnostic pop
 #endif
+
+#include "file.h"
 // when canonicalizing relative path names, boost filesystem will assume the the pathname
 // is relative to the current working directory. Maybe I need to mock out getcwd()?
 // then again, this test is essentially just unit testing the boost filesystem framework,
@@ -17,8 +19,19 @@
 
 // boost::filesystem does not expand ~ to $HOME, like one might expect on *nix boxes, so I am adding
 // that functionality to my boost::filesystem::path wrapper class
+BOOST_AUTO_TEST_SUITE(file)
 
-BOOST_AUTO_TEST_CASE(Test1)
+BOOST_AUTO_TEST_CASE(ConstructorShouldThrowRuntimeExceptionIfFileNameIsEmpty)
 {
-    BOOST_REQUIRE(true);
+
+    BOOST_REQUIRE_THROW(File f(""), std::runtime_error);
 }
+
+BOOST_AUTO_TEST_CASE(ConstructorShouldNotThrowRuntimeExceptionIfFileNameIsNotEmpty)
+{
+    BOOST_REQUIRE_NO_THROW(File f("this is not empty"));
+}
+
+
+
+BOOST_AUTO_TEST_SUITE_END()

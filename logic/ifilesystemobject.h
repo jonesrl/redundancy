@@ -2,12 +2,14 @@
 #define IFILESYSTEMOBJECT_H
 
 #include <string>
+#include <boost/filesystem.hpp>
 
 class IFileSystemObject
 {
 public:
     IFileSystemObject(const std::string& name);
     virtual ~IFileSystemObject()=0;
+    bool exists() const;
     void normalizeName();
     // NOTE: if the filesystemobject goes out of scope, will the caller of this function
     // be left holding a dangling reference? i think so, but I don't know exactly how this
@@ -18,6 +20,7 @@ public:
 private:
     std::string mName;
     std::string mNormalizedName;
+    boost::filesystem::path mPath;
 };
 
 #endif // IFILESYSTEMOBJECT_H
