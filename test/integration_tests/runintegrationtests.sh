@@ -18,40 +18,68 @@ EXE_DIRECTORY=$BUILD_DIRECTORY/test/integration_tests
 # this variable is used by setup.sh and cleanup.sh
 export TEST_DIRECTORY=`pwd`/test_directory
 
-# make sure that any prior test runs are cleaned up
+# delete the testing directory? 1 is yes, 0 is no
+DO_CLEANUP=0
+
+# print messages to stdout describing what is happening in the script? 1 is yes, 0 is no
+export VERBOSE=0
+
+msg()
+{
+    if [ $VERBOSE -eq 1 ]
+    then
+        echo "$1"
+    fi
+}
+
+# call the cleanup script
 if [ -d $TEST_DIRECTORY ]
 then
-    echo "Test directory found from prior run. Cleaning up"
-    $SCRIPT_DIRECTORY/cleanup.sh
+    msg "Found test directory"
+    if [ $DO_CLEANUP -eq 1 ]
+    then
+        msg "Cleaning up test directory"
+        $SCRIPT_DIRECTORY/cleanup.sh
+    else
+        msg "Skipping cleanup"
+    fi
 fi
 
 # call the setup script
-$SCRIPT_DIRECTORY/setup.sh
-if [ $? -ne 0 ]
+if [ -d $TEST_DIRECTORY ]
 then
-    echo "setup failed. aborting integration tests"
-    exit 1
+    msg "Found test directory. Skipping setup"
+else
+    msg "Running setup script"
+    $SCRIPT_DIRECTORY/setup.sh
+    if [ $? -ne 0 ]
+    then
+        msg "setup failed. aborting integration tests"
+        exit 1
+    fi
 fi
 
-
-# if setup ran successfully, run the integration tests
+# run the integration tests
+msg "Starting integration tests."
 $EXE_DIRECTORY/integration_tests
-
-# should I continue anyway if the tests failed? seems better to get a clean start everytime
-if [ $? -ne 0 ]
-then
-    echo "integration_tests failed. aborting."
-#    exit 1
-fi
+msg "Integration tests complete."
 
 # run the cleanup script
 if [ -d $TEST_DIRECTORY ]
 then
-    $SCRIPT_DIRECTORY/cleanup.sh
+    if [ $DO_CLEANUP -eq 1 ]
+    then
+        msg "Running cleanup."
+        $SCRIPT_DIRECTORY/cleanup.sh
+        if [ $? -ne 0 ]
+        then
+            msg "Cleanup failed. Manual cleanup required."
+        else
+            msg "Cleanup complete."
+        fi
+     else
+        msg "Skipping cleanup."
+    fi
 fi
 
-if [ $? -ne 0 ]
-then
-    echo "clean failed. manually clean up."
-    exit 1
-fi
+
