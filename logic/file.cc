@@ -1,7 +1,7 @@
 #include "file.h"
 #include <string>
 
-File::File(const std::string &name) : IFileSystemObject(name)
+File::File(const std::string &name) : IFile(name)
 {
 }
 

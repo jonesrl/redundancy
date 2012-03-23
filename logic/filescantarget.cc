@@ -1,12 +1,8 @@
 #include "filescantarget.h"
 #include <string>
+#include <boost/shared_ptr.hpp>
 
-FileScanTarget::FileScanTarget(const std::string& targetName) : IFileScanTarget(targetName)
+FileScanTarget::FileScanTarget(boost::shared_ptr<IFile> file) : IFileScanTarget(file)
 {
 
-}
-
-std::string FileScanTarget::getName() const
-{
-    return mTargetPathName;
 }

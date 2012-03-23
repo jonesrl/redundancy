@@ -2,11 +2,13 @@
 #define IFILESCANTARGET_H
 
 #include "iscantarget.h"
-#include <string>
+#include "ifile.h"
+#include <boost/shared_ptr.hpp>
+
 class IFileScanTarget : public IScanTarget
 {
 public:
-    IFileScanTarget(const std::string &targetName);
+    IFileScanTarget(boost::shared_ptr<IFile> file);
 
 };
 

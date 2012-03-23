@@ -1,10 +1,10 @@
 #ifndef FILE_H
 #define FILE_H
 
-#include "ifilesystemobject.h"
+#include "ifile.h"
 #include <string>
 
-class File : public IFileSystemObject
+class File : public IFile
 {
 public:
     File(const std::string& name);

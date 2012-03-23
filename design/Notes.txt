@@ -10,18 +10,7 @@ Goals for first iteration
 -full suite of unit and integration tests
 -very basic GUI just to make sure model api is suitable
 -basic command-line options
-
-Figure out how to handle localization soon. look into unicode libs
-
-Move to cmake after development has tapered off
-
-if I go multi-threaded, look into monitor objects, which
-enscapsulate synchronization primitives so client classes don't have to bother
-with it
-
-should I monitor scan targets for changes? see dir_monitor.zip for a boost
-asio example that will monitor directories, then fire a handler when something
-is changed, or possibly the linux file monitoring api.
+------------------------
 IFile
     will have permissions
     will have a name
@@ -44,4 +33,32 @@ ScanTargetCollection
     will own ScanTargets
     will make sure priorities make sense
     will act as a model layer
-    eliminate redundant targets in scan list
+    eliminate redundant targets in scan list (the subgraph problem?)
+-------------
+Figure out how to handle localization soon. look into unicode libs
+
+Move to cmake after development has tapered off
+
+if I go multi-threaded, look into monitor objects, which
+enscapsulate synchronization primitives so client classes don't have to bother
+with it
+
+should I monitor scan targets for changes? see dir_monitor.zip for a boost
+asio example that will monitor directories, then fire a handler when something
+is changed, or possibly the linux file monitoring api.
+-----------------------
+
+Here's how to temporarily disable a warning in GCC:
+#ifdef __GNUC__                                     // pragma exists for GCC
+#pragma GCC diagnostic push                         // saves the current diagnostic state
+#pragma GCC diagnostic ignored "-Waggregate-return" // ignores the aggregate-return warning
+#endif
+void blah() {}                                      // calls the problematic function
+
+#ifdef __GNUC__                                     // make sure were using gcc
+#pragma GCC diagnostic pop                          // restore the old diagnostic state
+#endif
+-------------
+boost's filesystem_error exception class inherits from boost's system_error exception class,
+which inherits from std::runtime_error
+--------------

@@ -2,7 +2,7 @@
 #include "iscantarget.h"
 #include <string>
 
-IFileScanTarget::IFileScanTarget(const std::string& targetName) : IScanTarget(targetName)
+IFileScanTarget::IFileScanTarget(boost::shared_ptr<IFile> file) : IScanTarget(file)
 {
     //IScanTarget::IScanTarget(targetName);
 

@@ -1,16 +1,15 @@
 #ifndef FILESCANTARGET_H
 #define FILESCANTARGET_H
 #include "ifilescantarget.h"
+#include "ifile.h"
 #include <string>
+#include <boost/shared_ptr.hpp>
 
 class FileScanTarget : public IFileScanTarget
 {
 public:
-    FileScanTarget(const std::string& targetName);
+    FileScanTarget(boost::shared_ptr<IFile> file);
     ~FileScanTarget(){}
-    std::string getName() const;
-private:
-    //std::string mTargetName;
 };
 
 #endif // FILESCANTARGET_H

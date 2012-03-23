@@ -17,14 +17,16 @@ SOURCES += \
     iscantarget.cc \
     ifilescantarget.cc \
     filescantarget.cc \
-    file.cc
+    file.cc \
+    ifile.cc
 
 HEADERS += \
     ifilesystemobject.h \
     iscantarget.h \
     ifilescantarget.h \
     filescantarget.h \
-    file.h
+    file.h \
+    ifile.h
 unix:!symbian {
     maemo5 {
         target.path = /opt/usr/lib

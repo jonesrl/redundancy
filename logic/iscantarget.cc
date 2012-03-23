@@ -1,8 +1,10 @@
 #include "iscantarget.h"
-#include <string>
+#include "ifilesystemobject.h"
 #include <boost/filesystem.hpp>
+#include <boost/shared_ptr.hpp>
 
-IScanTarget::IScanTarget(const std::string& targetPathName) : mTargetPathName(targetPathName)
+IScanTarget::IScanTarget(boost::shared_ptr<IFileSystemObject> fileSystemObject)
+    : mFileSystemObject(fileSystemObject)
 {
 }
 
@@ -17,13 +19,13 @@ IScanTarget::~IScanTarget()
 }
 
 //boost::filesystem::exists does not throw
-bool IScanTarget::exists() const
+bool IScanTarget::isReadable() const
 {
+    return mFileSystemObject->isReadable();
 
-    const boost::filesystem::path p(mTargetPathName);
+}
 
-    bool targetExists = boost::filesystem::exists(p);
-    return targetExists;
-
-
+const std::string &IScanTarget::getName() const
+{
+    return mFileSystemObject->getName();
 }

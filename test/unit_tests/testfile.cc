@@ -19,7 +19,7 @@
 
 // boost::filesystem does not expand ~ to $HOME, like one might expect on *nix boxes, so I am adding
 // that functionality to my boost::filesystem::path wrapper class
-BOOST_AUTO_TEST_SUITE(file)
+BOOST_AUTO_TEST_SUITE(FileUnit)
 
 BOOST_AUTO_TEST_CASE(ConstructorShouldThrowRuntimeExceptionIfFileNameIsEmpty)
 {
@@ -33,5 +33,10 @@ BOOST_AUTO_TEST_CASE(ConstructorShouldNotThrowRuntimeExceptionIfFileNameIsNotEmp
 }
 
 
+BOOST_AUTO_TEST_CASE(ShouldThrowIfRequestingCanonicalNameBeforeCalculatingCanonicalName)
+{
+    File f("ThisFileShouldNotExistAndThereforeShouldHaveAnEmptyCanonicalizedName");
+    BOOST_REQUIRE_THROW(f.getCanonicalizedName(), std::runtime_error);
+}
 
 BOOST_AUTO_TEST_SUITE_END()
