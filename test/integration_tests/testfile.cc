@@ -135,8 +135,11 @@ BOOST_FIXTURE_TEST_CASE(AReadableExistingFileInAReadableExecutableDirectoryIsRea
     BOOST_REQUIRE_EQUAL(true, f.isReadable());
 
 }
-//ln -s $TEST_DIRECTORY/link_to_readable_file $TEST_DIRECTORY/readable_executable_directory/readable_file
-//ln -s $TEST_DIRECTORY/link_to_unreadable_file $TEST_DIRECTORY/readable_executable_directory/unreadable_file
+
+
+//
+// testing isReadable on links
+//
 BOOST_FIXTURE_TEST_CASE(ALinkToAReadableFileIsReadable,TestFileFixture)
 {
     std::string pathName = test_directory + "link_to_readable_file";
@@ -156,13 +159,89 @@ BOOST_FIXTURE_TEST_CASE(ALinkToANonReadableFileIsNotReadable,TestFileFixture)
 //
 // testing canonicalizeName()
 //
-BOOST_AUTO_TEST_CASE(AnExistingNonReadableFileThatIsInAReadableDirectoryIsAbleToBeCanonicalized)
+BOOST_FIXTURE_TEST_CASE(ANonReadableExistingFileInANonReadableNonExecutableDirectoryIs, TestFileFixture)
 {
-    // this file exists but is not readable
-    std::string unreadable = "/home/rlj/unreadable_file";
 
-    std::cout << f.getCanonicalizedName() << std::endl;
-    BOOST_REQUIRE_EQUAL(true,true);
+
+    std::string pathName = test_directory + "non-readable_non-executable_directory/nonreadable_file";
+    //std::string pathName = test_directory + "non-readable_non-executable_directory/doesNotExist";
+    File f(pathName);
+    f.canonicalizeName();
+    BOOST_REQUIRE_EQUAL(false, f.isReadable());
+
 }
+
+BOOST_FIXTURE_TEST_CASE(AReadableExistingFileInANonReadableNonExecutableDirectoryIs, TestFileFixture)
+{
+
+
+    std::string pathName = test_directory + "non-readable_non-executable_directory/readable_file";
+    File f(pathName);
+    BOOST_REQUIRE_EQUAL(false, f.isReadable());
+
+}
+
+BOOST_FIXTURE_TEST_CASE(ANonReadableExistingFileInANonReadableExecutableDirectoryIs, TestFileFixture)
+{
+
+
+    std::string pathName = test_directory + "non-readable_executable_directory/nonreadable_file";
+    File f(pathName);
+    BOOST_REQUIRE_EQUAL(false, f.isReadable());
+
+}
+
+BOOST_FIXTURE_TEST_CASE(AReadableExistingFileInANonReadableExecutableDirectoryIs, TestFileFixture)
+{
+
+
+    std::string pathName = test_directory + "non-readable_executable_directory/readable_file";
+    File f(pathName);
+    BOOST_REQUIRE_EQUAL(true, f.isReadable());
+
+}
+
+BOOST_FIXTURE_TEST_CASE(ANonReadableExistingFileInAReadableNonExecutableDirectoryIs, TestFileFixture)
+{
+
+
+    std::string pathName = test_directory + "readable_nonexecutable_directory/nonreadable_file";
+    File f(pathName);
+    BOOST_REQUIRE_EQUAL(false, f.isReadable());
+
+}
+
+BOOST_FIXTURE_TEST_CASE(AReadableExistingFileInAReadableNonExecutableDirectoryIs, TestFileFixture)
+{
+
+
+    std::string pathName = test_directory + "readable_nonexecutable_directory/readable_file";
+    File f(pathName);
+    BOOST_REQUIRE_EQUAL(false, f.isReadable());
+
+}
+
+BOOST_FIXTURE_TEST_CASE(ANonReadableExistingFileInAReadableExecutableDirectoryIs, TestFileFixture)
+{
+
+
+    std::string pathName = test_directory + "readable_executable_directory/nonreadable_file";
+    File f(pathName);
+    BOOST_REQUIRE_EQUAL(false, f.isReadable());
+
+}
+
+
+
+BOOST_FIXTURE_TEST_CASE(AReadableExistingFileInAReadableExecutableDirectoryIs, TestFileFixture)
+{
+
+
+    std::string pathName = test_directory + "readable_executable_directory/readable_file";
+    File f(pathName);
+    BOOST_REQUIRE_EQUAL(true, f.isReadable());
+
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()

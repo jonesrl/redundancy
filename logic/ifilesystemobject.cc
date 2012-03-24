@@ -63,9 +63,7 @@ void IFileSystemObject::canonicalizeName()
     boost::system::error_code ec;
     mNormalizedName = canonical(p, ec).generic_string();
     */
-    boost::filesystem::path parent = mPath.parent_path();
-    //empty parent means that mPath was root
-    std::cout << "Parent path: " << parent.generic_string() << std::endl;
+
     mCanonicalizedName = boost::filesystem::canonical(mPath).generic_string();
 }
 #ifdef __GNUC__                                     // make sure were using gcc
