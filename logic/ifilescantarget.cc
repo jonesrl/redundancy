@@ -1,14 +1,11 @@
+#include <string>
 #include "ifilescantarget.h"
 #include "iscantarget.h"
-#include <string>
 
-IFileScanTarget::IFileScanTarget(boost::shared_ptr<IFile> file) : IScanTarget(file)
+IFileScanTarget::IFileScanTarget(boost::shared_ptr<IFile> file, int64_t priority, bool recursive)
+    : IScanTarget(file, priority, recursive)
 {
-    //IScanTarget::IScanTarget(targetName);
 
 }
 
-//IFileScanTarget::~IFileScanTarget()
-//{
 
-//}

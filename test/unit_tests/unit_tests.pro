@@ -8,7 +8,8 @@ CONFIG -= qt
 SOURCES += \
     testfile.cc \
     unittestsrunner.cc \
-    testfilescantarget.cc
+    testfilescantarget.cc \
+    fakefile.cc
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../logic/release/ -llogic
@@ -42,3 +43,6 @@ else:unix:!symbian: PRE_TARGETDEPS += $$PWD/../../../../../usr/lib/libboost_syst
 
 
 unix|win32: LIBS += -lboost_unit_test_framework
+
+HEADERS += \
+    fakefile.h

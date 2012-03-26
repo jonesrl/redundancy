@@ -1,4 +1,9 @@
 #!/bin/bash
+# TODO: This script will not run from the command-line, only from within QtCreator.
+#       I am relying on the BUILD_DIRECTORY variable being the current directory, like it is in
+#       QtCreator. Consider parsing command-line arguments to set some of these variables instead of
+#       hard-coding it. If a variable is not passed in on the command-line, then let it default to the
+#       values that QtCreator expects.
 
 # the directory containing the project source code
 PROJECT_DIRECTORY=$HOME/redundancy

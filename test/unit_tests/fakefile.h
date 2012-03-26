@@ -1,9 +1,7 @@
-#ifndef FILESCANTARGET_H
-#define FILESCANTARGET_H
+#ifndef FAKEFILE_H
+#define FAKEFILE_H
 
 #include <string>
-#include <boost/shared_ptr.hpp>
-#include "ifilescantarget.h"
 #include "ifile.h"
 
 #ifdef __GNUC__                                     // pragma exists for GCC
@@ -11,14 +9,18 @@
 #pragma GCC diagnostic ignored "-Wpadded"           // ignore the Wpadded warning
 #endif
 
-class FileScanTarget : public IFileScanTarget
+class FakeFile : public IFile
 {
 public:
-    FileScanTarget(boost::shared_ptr<IFile> file, int64_t priority, bool recursive);
-    ~FileScanTarget(){}
+    FakeFile(const std::string &name);
+
+    bool isReadable() const;
+    bool mIsReadable;
 };
 
 #ifdef __GNUC__                                     // make sure were using gcc
 #pragma GCC diagnostic pop                          // restore the old diagnostic state
 #endif
-#endif // FILESCANTARGET_H
+
+#endif // FAKEFILE_H
+

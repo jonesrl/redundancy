@@ -1,8 +1,8 @@
-#include "ifilesystemobject.h"
-#include <boost/filesystem.hpp>
 #include <string>
 #include <stdexcept>
 #include <fstream>
+#include <boost/filesystem.hpp>
+#include "ifilesystemobject.h"
 
 // references can't be null, so there is no need to check
 IFileSystemObject::IFileSystemObject(const std::string& name)
@@ -20,48 +20,56 @@ IFileSystemObject::~IFileSystemObject()
 
 }
 
-
+//NOTE: will this work on directories and links? If not use the file_status() function
+//      which is a wrapper around stat(). Windows has a stat() function too I believe
 bool IFileSystemObject::isReadable() const
 {
     std::ifstream ifile(mName.c_str());
-    bool accessible;
+    bool readable;
     if(ifile)
-        accessible = true;
+        readable = true;
     else
-        accessible = false;
+        readable = false;
     ifile.close();
-    return accessible;
+    return readable;
 }
-// the canonical() function in boost::filesystem will dereference symlinks
-// to get the actual target, as well as remove extraneous dots and slashes
-// I don't see a function in boost::filesystem that will just remove the extra
-// dots and slashes, but not dereference symlinks
-// make preferred will convert forward slashes to backslashes on windows, and does
+
+// NOTE: make preferred will convert forward slashes to backslashes on windows, and does
 // nothing on POSIX
 // I think at this point the path should be stored in the generic format, and maybe get
 // converted to a platform-native format at the display layer (see native vs. generic format
 // in the boost::filesystem documentation
-// see boost::system documentation for converting ec into a message suitable for an exception
-
 // TODO: figure out how to handle unicode. The boost::filesystem::path class provides conversions
 // using the ICU library, so I think this would be the appropriate place to do it
-// NOTE: for canonical(p), p must exist, and must be readable
+// TODO: figure out an exception hierarchy
+// see boost::system documentation for converting ec into a message suitable for an exception
+// filesystem_error inherits from system_error which inherits from runtime_error ( i think )
+// to get useful info out of an error, try something like this -
+// File f(pathName);
+// try {
+//    f.canonicalizeName();
+// } catch(boost::filesystem::filesystem_error e) {
+//    std::cerr << "caught filesystem error\n"
+//              << "path1: " << e.path1() << std::endl
+//              << "path2: " << e.path2() << std::endl
+//              << "what: " << e.what() << std::endl
+//              << "error code: " << e.code() << std::endl
+//              << "error code message: " << e.code().message() << std::endl;
+// }
 
-// It appears to me that in order to canonicalize a name
-// 1) all of the path elements leading up to the name must exist and be readable
-// 2) the name itself must exist
-// - but - if 1) and 2) hold, then the name itself does not have to be readable
-// for 1), if the parent directory of the item is readable, that would imply all directories
-// leading up to it are also readable
 #ifdef __GNUC__                                     // pragma exists for GCC
-#pragma GCC diagnostic push                         // saves the current diagnostic state
-#pragma GCC diagnostic ignored "-Waggregate-return" // ignores the aggregate-return warning
+#pragma GCC diagnostic push                         // save the current diagnostic state
+#pragma GCC diagnostic ignored "-Waggregate-return" // ignore the aggregate-return warning
 #endif
+
+// dereference links, remove extra dots and slashes, and convert to an absolute path
+// will throw boost::filesystem::filesystem_error if the item does not exist
+// or if it is not readable
 void IFileSystemObject::canonicalizeName()
 {
     /* here's how to do it the non-throwing way
     boost::system::error_code ec;
-    mNormalizedName = canonical(p, ec).generic_string();
+    mCanonicalizedName = canonical(p, ec).generic_string();
     */
 
     mCanonicalizedName = boost::filesystem::canonical(mPath).generic_string();
@@ -69,20 +77,18 @@ void IFileSystemObject::canonicalizeName()
 #ifdef __GNUC__                                     // make sure were using gcc
 #pragma GCC diagnostic pop                          // restore the old diagnostic state
 #endif
-// TODO: throw a runtime exception if this is called before normalizeName is called
-// returning a const reference to prevent clients from modifying private data
-// TODO: figure out under what conditions normalize() will return an empty string
-//       there might be more cases than normalizing a non-existant path
-// NOTE:if at some point the normalized name will need to outlive the containing file system object
-// class, return smart pointer instead
-const std::string& IFileSystemObject::getCanonicalizedName() const
+
+// TODO: figure out under what conditions canonicalize() will return an empty string
+//       are there more cases where canonicalize() will return an empty string than giving it a non-existant path
+const std::string IFileSystemObject::getCanonicalizedName() const
 {
     if(mCanonicalizedName == "")
         throw std::runtime_error("mCanonicalizedname is empty. call canonicalizedName() first");
+
     return mCanonicalizedName;
 }
 
-const std::string &IFileSystemObject::getName() const
+const std::string IFileSystemObject::getName() const
 {
     return mName;
 }

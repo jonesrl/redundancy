@@ -61,4 +61,13 @@ void blah() {}                                      // calls the problematic fun
 -------------
 boost's filesystem_error exception class inherits from boost's system_error exception class,
 which inherits from std::runtime_error
+
+According to http://lists.boost.org/boost-users/2011/06/68798.php -
+It's difficult to tell, but it sounds like there was some kind of trouble with boost::exception with some boost
+libraries, or some kind of political conflict. I don't know. So, what I intend to do, is use the non-throwing
+versions of boost::filesystem functions, create exception classes deriving from boost::exception, and then construct
+exception types out of boost::filesystem return codes. The filesystem_error is defined in filesystem/v3/operations.hpp
+
+Distinguishing between reasons for not being readable(permissions or nonexisting) is only important for the scan targets.
+During the directory walk, I can write permissions errors to a log or whatnot.
 --------------
