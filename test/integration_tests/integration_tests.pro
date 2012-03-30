@@ -13,7 +13,8 @@ CONFIG -= qt
 SOURCES += \
     integrationtestsrunner.cc \
     testfile.cc \
-    testfilescantarget.cc
+    testfilescantarget.cc \
+    testdirectory.cc
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../logic/release/ -llogic
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../logic/debug/ -llogic
