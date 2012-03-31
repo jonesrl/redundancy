@@ -72,6 +72,16 @@ Distinguishing between reasons for not being readable(permissions or nonexisting
 During the directory walk, I can write permissions errors to a log or whatnot.
 --------------
 Directory Permissions
-The executable bit on a directory means "searchable." The executable bit allows a process to set the directory as the
-current working directory, and get information on the contained files (such as size, permissions, inode number, etc).
-The readable bit allows you to get a directory listing, but if you know a file is there, you can still access the file.
+    executable bit
+        allows a process to
+            set the directory as the current working directory
+            get information on the contained files (such as size, permissions, inode number, etc)
+            write permissions on a file are meaningless without execute permissions on the containing directory
+    readable bit
+        allows a process to get the names of files
+        if you already know a file exists, you can still access the file anyway even without directory read permissions
+    write bit
+        allows a process to rename, create, or delete files PROVIDED the process also has directory execute permissions
+        write permissions on a directory allows a process to delete a file even if that file is not writeable.
+So, for a directory to be a useful scan target, I need read permissions so that I can get the list of files, and I need
+execute permissions to do anything useful with that list of files.
