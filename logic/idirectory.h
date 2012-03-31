@@ -8,6 +8,7 @@ class IDirectory : public IFileSystemObject
 {
 public:
     IDirectory(const std::string& name);
+    bool virtual isExecutable() const=0;
 };
 
 #endif // IDIRECTORY_H
