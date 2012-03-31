@@ -71,3 +71,7 @@ exception types out of boost::filesystem return codes. The filesystem_error is d
 Distinguishing between reasons for not being readable(permissions or nonexisting) is only important for the scan targets.
 During the directory walk, I can write permissions errors to a log or whatnot.
 --------------
+Directory Permissions
+The executable bit on a directory means "searchable." The executable bit allows a process to set the directory as the
+current working directory, and get information on the contained files (such as size, permissions, inode number, etc).
+The readable bit allows you to get a directory listing, but if you know a file is there, you can still access the file.
