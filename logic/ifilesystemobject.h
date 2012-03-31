@@ -17,7 +17,6 @@ private:
     std::string mName;
     std::string mCanonicalizedName;
     boost::filesystem::path mPath;
-
 };
 
 #endif // IFILESYSTEMOBJECT_H

@@ -20,7 +20,7 @@ IFileSystemObject::~IFileSystemObject()
 
 }
 
-//NOTE: will this work on directories and links? If not use the file_status() function
+//NOTE: will this work on links? If not use the file_status() function
 //      which is a wrapper around stat(). Windows has a stat() function too I believe
 bool IFileSystemObject::isReadable() const
 {
@@ -67,7 +67,7 @@ bool IFileSystemObject::isReadable() const
 // or if it is not readable
 void IFileSystemObject::canonicalizeName()
 {
-    /* here's how to do it the non-throwing way
+    /* NOTE: here's how to do it the non-throwing way
     boost::system::error_code ec;
     mCanonicalizedName = canonical(p, ec).generic_string();
     */
