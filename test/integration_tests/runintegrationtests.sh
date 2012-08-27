@@ -6,7 +6,8 @@
 #       values that QtCreator expects.
 
 # the directory containing the project source code
-PROJECT_DIRECTORY=$HOME/redundancy
+echo current directory is $PWD
+PROJECT_DIRECTORY=$HOME/Projects/jonesrl-redundancy
 
 # the directory containing the integration tests
 SCRIPT_DIRECTORY=$PROJECT_DIRECTORY/test/integration_tests
