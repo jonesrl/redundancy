@@ -41,24 +41,7 @@ unix:!symbian {
 }
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../usr/lib/release/ -lboost_filesystem
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../usr/lib/debug/ -lboost_filesystem
-else:symbian: LIBS += -lboost_filesystem
-else:unix: LIBS += -L$$PWD/../../../../usr/lib/ -lboost_filesystem
 
-INCLUDEPATH += $$PWD/../../../../usr/include/boost
-DEPENDPATH += $$PWD/../../../../usr/include/boost
+unix:!macx: LIBS += -lboost_system
 
-
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../usr/lib/release/ -lboost_system
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../usr/lib/debug/ -lboost_system
-else:symbian: LIBS += -lboost_system
-else:unix: LIBS += -L$$PWD/../../../../usr/lib/ -lboost_system
-
-INCLUDEPATH += $$PWD/../../../../usr/include
-DEPENDPATH += $$PWD/../../../../usr/include
-
-win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../../../usr/lib/release/boost_system.lib
-else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../../../usr/lib/debug/boost_system.lib
-else:unix:!symbian: PRE_TARGETDEPS += $$PWD/../../../../usr/lib/libboost_system.a
+unix:!macx: LIBS += -lboost_filesystem

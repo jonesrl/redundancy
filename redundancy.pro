@@ -1,7 +1,7 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 
-include(/home/rlj/redundancy/redundancy.pri)
+include($$PWD/redundancy.pri)
 SUBDIRS += \
     logic \
     test \
